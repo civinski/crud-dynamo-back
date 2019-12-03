@@ -6,7 +6,8 @@ const crypto = require('crypto');
 const uuidv4 = require('uuid/v4');
 var dateFormat = require('dateformat');
 
-router.get( '/', async(req,res) => {
+router.get('/', async(req,res) => {
+    
     try{
 
         var params = {
@@ -15,6 +16,7 @@ router.get( '/', async(req,res) => {
         
         dynamodb.scan(params, function(err, data) {
             if (err) {
+                console.log(err)
                 return res.status(400).send( {'error': 'Falha ao buscar dados','decription':JSON.stringify(err.message, null, 2)} );
             } else {
                 return res.send(data.Items);
@@ -59,6 +61,7 @@ router.post( '/cadastro', async(req,res) => {
 
 
 router.put( '/:filme_hashcod', async(req,res) => {
+    console.log('entrei')
     try{
         var filme_hashcod = req.param("filme_hashcod");
 
@@ -90,7 +93,7 @@ router.put( '/:filme_hashcod', async(req,res) => {
     }
 });
 
-router.get( '/:filme_hashcod', async(req,res) => {
+router.get('/:filme_hashcod', async(req,res) => {
     try{
         var filme_hashcod = req.param("filme_hashcod");
 

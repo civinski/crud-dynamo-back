@@ -10,7 +10,7 @@ AWS.config.update({
  "secretAccessKey": config.aws_secretAccessKey,
 });
 
-const dynamoConnection = new AWS.DynamoDB.DocumentClient();
+const dynamoConnection = new AWS.DynamoDB.DocumentClient()
 
 module.exports = dynamoConnection;
 
