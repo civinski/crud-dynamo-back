@@ -15,23 +15,19 @@ router.get("/", async (req, res) => {
     dynamodb.scan(params, function(err, data) {
       if (err) {
         console.log(err);
-        return res
-          .status(400)
-          .send({
-            error: "Falha ao buscar dados",
-            decription: JSON.stringify(err.message, null, 2)
-          });
+        return res.status(400).send({
+          error: "Falha ao buscar dados",
+          decription: JSON.stringify(err.message, null, 2)
+        });
       } else {
         return res.send(data.Items);
       }
     });
   } catch (err) {
-    return res
-      .status(400)
-      .send({
-        error: "Falha no cadastro",
-        decription: JSON.stringify(err, null, 2)
-      });
+    return res.status(400).send({
+      error: "Falha no cadastro",
+      decription: JSON.stringify(err, null, 2)
+    });
   }
 });
 
@@ -58,23 +54,19 @@ router.post("/cadastro", async (req, res) => {
 
     dynamodb.put(params, function(err, data) {
       if (err) {
-        return res
-          .status(400)
-          .send({
-            error: "Falha no cadastro",
-            decription: JSON.stringify(err.message, null, 2)
-          });
+        return res.status(400).send({
+          error: "Falha no cadastro",
+          decription: JSON.stringify(err.message, null, 2)
+        });
       } else {
         return res.send(params.Item);
       }
     });
   } catch (err) {
-    return res
-      .status(400)
-      .send({
-        error: "Falha no cadastro",
-        decription: JSON.stringify(err, null, 2)
-      });
+    return res.status(400).send({
+      error: "Falha no cadastro",
+      decription: JSON.stringify(err, null, 2)
+    });
   }
 });
 
@@ -101,23 +93,19 @@ router.put("/:filme_hashcod", async (req, res) => {
 
     dynamodb.update(params, function(err, data) {
       if (err) {
-        return res
-          .status(400)
-          .send({
-            error: "Falha ao editar filme",
-            decription: JSON.stringify(err.message, null, 2)
-          });
+        return res.status(400).send({
+          error: "Falha ao editar filme",
+          decription: JSON.stringify(err.message, null, 2)
+        });
       } else {
         return res.send(data.Attributes);
       }
     });
   } catch (err) {
-    return res
-      .status(400)
-      .send({
-        error: "Falha ao editar filme",
-        decription: JSON.stringify(err, null, 2)
-      });
+    return res.status(400).send({
+      error: "Falha ao editar filme",
+      decription: JSON.stringify(err, null, 2)
+    });
   }
 });
 
@@ -134,23 +122,19 @@ router.get("/:filme_hashcod", async (req, res) => {
 
     dynamodb.get(params, function(err, data) {
       if (err) {
-        return res
-          .status(400)
-          .send({
-            error: "Falha buscar filme",
-            decription: JSON.stringify(err.message, null, 2)
-          });
+        return res.status(400).send({
+          error: "Falha buscar filme",
+          decription: JSON.stringify(err.message, null, 2)
+        });
       } else {
         return res.send(data.Item);
       }
     });
   } catch (err) {
-    return res
-      .status(400)
-      .send({
-        error: "Falha ao buscar filme",
-        decription: JSON.stringify(err, null, 2)
-      });
+    return res.status(400).send({
+      error: "Falha ao buscar filme",
+      decription: JSON.stringify(err, null, 2)
+    });
   }
 });
 
@@ -167,23 +151,19 @@ router.delete("/:filme_hashcod", async (req, res) => {
 
     dynamodb.delete(params, function(err, data) {
       if (err) {
-        return res
-          .status(400)
-          .send({
-            error: "Falha ao deletar filme",
-            decription: JSON.stringify(err.message, null, 2)
-          });
+        return res.status(400).send({
+          error: "Falha ao deletar filme",
+          decription: JSON.stringify(err.message, null, 2)
+        });
       } else {
         return res.send(data);
       }
     });
   } catch (err) {
-    return res
-      .status(400)
-      .send({
-        error: "Falha ao deletar filme",
-        decription: JSON.stringify(err, null, 2)
-      });
+    return res.status(400).send({
+      error: "Falha ao deletar filme",
+      decription: JSON.stringify(err, null, 2)
+    });
   }
 });
 
