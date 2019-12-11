@@ -6,20 +6,25 @@ const crypto = require("crypto");
 const uuidv4 = require("uuid/v4");
 var dateFormat = require("dateformat");
 
+//endpoint de listagem de filmes
 router.get("/", async (req, res) => {
   try {
     var params = {
       TableName: table
     };
 
-    dynamodb.scan(params, function(err, data) {
+    //funcao que le todos os itens no dynamo
+    dynamodb.scan(params, (err, data) => {
       if (err) {
         console.log(err);
+
+        //retorno em caso de erro
         return res.status(400).send({
           error: "Falha ao buscar dados",
           decription: JSON.stringify(err.message, null, 2)
         });
       } else {
+        //retorna os itens
         return res.send(data.Items);
       }
     });
@@ -31,15 +36,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+//endpoint de cadastro
 router.post("/cadastro", async (req, res) => {
   try {
+    //criando hashcod para identificação do item
     const secret = uuidv4();
     const hash = crypto
       .createHmac("sha256", secret)
       .digest("hex")
       .slice(0, 20);
+
+    //data de cadastro do item
     var data_cad = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
 
+    //setando os parametros para gravar no dynamo
     var params = {
       TableName: table,
       Item: {
@@ -52,7 +62,7 @@ router.post("/cadastro", async (req, res) => {
       }
     };
 
-    dynamodb.put(params, function(err, data) {
+    dynamodb.put(params, (err, data) => {
       if (err) {
         return res.status(400).send({
           error: "Falha no cadastro",
@@ -70,6 +80,7 @@ router.post("/cadastro", async (req, res) => {
   }
 });
 
+//endpoint de edição
 router.put("/:filme_hashcod", async (req, res) => {
   console.log("entrei");
   try {
@@ -91,7 +102,7 @@ router.put("/:filme_hashcod", async (req, res) => {
       ReturnValues: "UPDATED_NEW"
     };
 
-    dynamodb.update(params, function(err, data) {
+    dynamodb.update(params, (err, data) => {
       if (err) {
         return res.status(400).send({
           error: "Falha ao editar filme",
@@ -109,6 +120,7 @@ router.put("/:filme_hashcod", async (req, res) => {
   }
 });
 
+//endpoint para ler detalhes do filme
 router.get("/:filme_hashcod", async (req, res) => {
   try {
     var filme_hashcod = req.param("filme_hashcod");
@@ -120,7 +132,7 @@ router.get("/:filme_hashcod", async (req, res) => {
       }
     };
 
-    dynamodb.get(params, function(err, data) {
+    dynamodb.get(params, (err, data) => {
       if (err) {
         return res.status(400).send({
           error: "Falha buscar filme",
@@ -138,6 +150,7 @@ router.get("/:filme_hashcod", async (req, res) => {
   }
 });
 
+//endpoint para deletar o filme
 router.delete("/:filme_hashcod", async (req, res) => {
   try {
     var filme_hashcod = req.param("filme_hashcod");
@@ -149,7 +162,7 @@ router.delete("/:filme_hashcod", async (req, res) => {
       }
     };
 
-    dynamodb.delete(params, function(err, data) {
+    dynamodb.delete(params, (err, data) => {
       if (err) {
         return res.status(400).send({
           error: "Falha ao deletar filme",
@@ -167,4 +180,5 @@ router.delete("/:filme_hashcod", async (req, res) => {
   }
 });
 
+//exportando a rota
 module.exports = app => app.use("/filmes", router);

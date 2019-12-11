@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+//iniciando express
 const app = express();
 
+//configuracoes da api
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
@@ -16,6 +18,7 @@ app.use(function(req, res, next) {
 });
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//importando o controller
 require("./controllers/FilmeController")(app);
 
 app.listen(3050);
