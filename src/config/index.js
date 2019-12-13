@@ -1,6 +1,5 @@
 const config = {
-  aws_accessKeyId: "AKIASVYMSKI3GIICGXAL",
-  aws_secretAccessKey: "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"
+  //COMMIT NO GIT SEM AS CHAVES
 };
 
 module.exports = config;
